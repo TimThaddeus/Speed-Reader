@@ -1,58 +1,76 @@
-# Speed Reader App
+# Speed Reader App - Projektstand
 
-**RSVP Speed Reading Web-App** (Rapid Serial Visual Presentation) - Wörter werden einzeln an derselben Stelle angezeigt für schnelleres Lesen.
+## Links
+- **Live:** https://speed-reader-tim.netlify.app
+- **GitHub:** https://github.com/TimThaddeus/Speed-Reader
+- **Lokal:** `/home/tim/Speed-Reader`
 
-## Aktuelle Version
-- `speed-reader-9.html`
+## Fertig implementiert
 
-## Features
-
-### Kernfunktionen
-- RSVP Speed Reading - Wörter einzeln anzeigen
-- Geschwindigkeit einstellbar: 100-1000 WPM
-- ORP Fokuspunkt - Roter Buchstabe für schnellere Erkennung
-
-### Pausen & Timing
-- Pause bei Satzende: 0-1s einstellbar
-- Pause bei Kapitel: 0-5s einstellbar
-- Lange Wörter verlangsamen: ms pro Zeichen + Mindestlänge
+### Core Features
+- RSVP Speed Reading (Wörter einzeln anzeigen)
+- Geschwindigkeit: 100-1000 WPM
+- ORP Fokuspunkt (roter Buchstabe)
+- Pausen: Satzende (0-1s), Kapitel (0-5s)
+- Lange Wörter verlangsamen (0-100ms, ab X Zeichen)
 
 ### Navigation
-- Play/Pause
-- Vor/Zurück
-- 10er Sprünge
+- Play/Pause, Vor/Zurück, 10er Sprünge
+- Keyboard: Space, Pfeiltasten
 - Klickbarer Fortschrittsbalken
 
-### Keyboard Shortcuts
-- Space - Play/Pause
-- Pfeiltasten - Navigation
+### Input
+- Textfeld (manuell)
+- Dateien: PDF, EPUB, TXT, DOCX
+- OCR: Bild scannen (Tesseract.js)
 
-### Text-Input
-- Manuell per Textfeld
-- Datei-Support: PDF, EPUB, TXT, DOCX
-- Bild scannen (OCR) via Tesseract.js
+### UI/UX
+- Deutsch/Englisch
+- Light/Dark Mode
+- Hasen-Logo (Header + PWA Icons)
 
-### UI
-- Mehrsprachig: Deutsch/Englisch
-- Light/Dark Mode Toggle
-- PWA-ready
-
-## Dateien
-
-| Datei | Beschreibung |
-|-------|--------------|
-| `speed-reader-9.html` | Die App |
-| `manifest.json` | PWA-Konfiguration |
-| `icon-192.png` | Android Homescreen Icon |
-| `icon-512.png` | Splash Screen Icon |
-
-## Deployment
-
-1. Alle 4 Dateien in einen Ordner
-2. [netlify.com](https://netlify.com) → Sign up → "Add new site" → "Deploy manually"
-3. Ordner reinziehen
-4. URL erhalten → Im Handy öffnen → "Zum Homescreen hinzufügen"
+### Deployment
+- PWA (installierbar)
+- Netlify Hosting
+- Auto-Deploy bei GitHub Push
 
 ## Noch offen
-- Online stellen auf Netlify
-- Handschrift-Erkennung mit Claude Vision (braucht API-Key)
+
+| Feature | Benötigt |
+|---------|----------|
+| Handschrift-Erkennung | Claude API-Key |
+
+## Repo-Struktur
+
+```
+Speed-Reader/
+├── index.html          # HTML-Struktur
+├── manifest.json       # PWA-Config
+├── css/
+│   └── styles.css      # Alle Styles
+├── js/
+│   ├── app.js          # Hauptlogik & Events
+│   ├── state.js        # Zentrales State-Management
+│   ├── reader.js       # RSVP Reader Engine
+│   ├── parsers.js      # PDF/EPUB/DOCX/OCR Parser
+│   └── i18n.js         # Übersetzungen (DE/EN)
+├── icon-192.png        # Hasen-Icon
+├── icon-512.png        # Hasen-Icon
+├── logo.png            # Header-Logo
+└── README.md           # Doku
+```
+
+## Workflow
+
+```bash
+# Änderungen pushen:
+cd /home/tim/Speed-Reader
+git add .
+git commit -m "Beschreibung"
+git push
+# → Netlify deployed automatisch
+```
+
+---
+
+**Kopiere das in den nächsten Chat und sag was du brauchst!**
