@@ -2,7 +2,7 @@
   "name": "Speed Reader - RSVP",
   "short_name": "Speed Reader",
   "description": "Schneller lesen mit RSVP-Technik",
-  "start_url": "./speed-reader-9.html",
+  "start_url": "./",
   "display": "standalone",
   "background_color": "#0a0a0b",
   "theme_color": "#3b82f6",
