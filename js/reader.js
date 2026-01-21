@@ -41,10 +41,13 @@ export function parseText(text) {
 
 /**
  * Calculate ORP (Optimal Recognition Point) index
- * ~40% for better centering in RSVP display
+ * Based on research: position depends on word length
  */
 export function getOrpIndex(wordLength) {
-    return Math.floor(wordLength * 0.4);
+    if (wordLength <= 2) return 0;       // 1-2 chars: 1st letter
+    if (wordLength <= 6) return 1;       // 3-6 chars: 2nd letter
+    if (wordLength <= 9) return 2;       // 7-9 chars: 3rd letter
+    return 3;                            // 10+ chars: 4th letter
 }
 
 /**
