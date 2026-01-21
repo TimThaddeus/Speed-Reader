@@ -100,15 +100,21 @@ function showToast(message, duration = 2000) {
 
 /**
  * Calculate font size with auto-scaling for long words
+ * Ensures words always fit on screen regardless of font size setting
  */
 function calculateFontSize(wordLength) {
-    const baseFontSize = state.fontSize; // User setting (50-150%)
+    const baseFontSize = state.fontSize; // User setting (25-200%)
 
-    // Auto-scale down for long words (starts scaling at 10+ chars)
-    const scaleThreshold = 10;
-    if (wordLength > scaleThreshold) {
-        const excess = wordLength - scaleThreshold;
-        const scaleFactor = Math.max(0.5, 1 - (excess * 0.04)); // -4% per extra char, min 50%
+    // Max chars that fit at 100% font size (on mobile ~12, desktop ~18)
+    const isMobile = window.innerWidth < 600;
+    const maxCharsAt100 = isMobile ? 12 : 18;
+
+    // Calculate max chars at current font size
+    const maxChars = maxCharsAt100 * (100 / baseFontSize);
+
+    // If word is longer than max, scale down proportionally
+    if (wordLength > maxChars) {
+        const scaleFactor = maxChars / wordLength;
         return baseFontSize * scaleFactor;
     }
 
