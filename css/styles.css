@@ -843,11 +843,33 @@ input[type="range"]::-moz-range-thumb {
 .word-display {
     font-size: clamp(2.5rem, 10vw, 7rem);
     font-weight: 400;
-    text-align: center;
     letter-spacing: 0.02em;
     color: var(--text-primary);
     font-family: 'Outfit', sans-serif;
     will-change: opacity, transform;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ORP positioning: center character stays fixed */
+.word-display .orp-before {
+    text-align: right;
+    min-width: 45vw;
+    max-width: 45vw;
+    overflow: hidden;
+}
+
+.word-display .orp-center {
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.word-display .orp-after {
+    text-align: left;
+    min-width: 45vw;
+    max-width: 45vw;
+    overflow: hidden;
 }
 
 .word-display .highlight {

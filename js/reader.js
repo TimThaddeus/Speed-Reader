@@ -49,10 +49,14 @@ export function getOrpIndex(wordLength) {
 
 /**
  * Format word with highlighted ORP character
+ * Returns 3 spans: before, highlight (fixed center), after
  */
 export function formatWordWithOrp(word, highlight = true) {
     if (!highlight || word.length <= 1) {
-        return { html: escapeHtml(word), plain: word };
+        return {
+            html: `<span class="orp-before"></span><span class="orp-center">${escapeHtml(word)}</span><span class="orp-after"></span>`,
+            plain: word
+        };
     }
 
     const orpIndex = getOrpIndex(word.length);
@@ -61,7 +65,7 @@ export function formatWordWithOrp(word, highlight = true) {
     const after = escapeHtml(word.slice(orpIndex + 1));
 
     return {
-        html: `${before}<span class="highlight">${highlightChar}</span>${after}`,
+        html: `<span class="orp-before">${before}</span><span class="orp-center highlight">${highlightChar}</span><span class="orp-after">${after}</span>`,
         plain: word
     };
 }
