@@ -16,6 +16,7 @@ export const state = {
     highlightCenter: true,
     longWordBonus: 10,
     longWordThreshold: 8,
+    fontSize: 100,
 
     // UI state
     currentLang: 'de',

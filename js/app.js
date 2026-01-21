@@ -49,6 +49,8 @@ function cacheElements() {
     elements.longWordThresholdSlider = document.getElementById('long-word-threshold-slider');
     elements.longWordThresholdValue = document.getElementById('long-word-threshold-value');
     elements.highlightCenterCheck = document.getElementById('highlight-center');
+    elements.fontSizeSlider = document.getElementById('font-size-slider');
+    elements.fontSizeValue = document.getElementById('font-size-value');
 
     // File upload
     elements.fileUploadZone = document.getElementById('file-upload-zone');
@@ -94,6 +96,23 @@ function showToast(message, duration = 2000) {
 }
 
 /**
+ * Calculate font size with auto-scaling for long words
+ */
+function calculateFontSize(wordLength) {
+    const baseFontSize = state.fontSize; // User setting (50-150%)
+
+    // Auto-scale down for long words (starts scaling at 10+ chars)
+    const scaleThreshold = 10;
+    if (wordLength > scaleThreshold) {
+        const excess = wordLength - scaleThreshold;
+        const scaleFactor = Math.max(0.5, 1 - (excess * 0.04)); // -4% per extra char, min 50%
+        return baseFontSize * scaleFactor;
+    }
+
+    return baseFontSize;
+}
+
+/**
  * Display current word
  */
 function displayWord() {
@@ -102,6 +121,10 @@ function displayWord() {
 
     const formatted = formatWordWithOrp(wordObj.text, state.highlightCenter);
     elements.wordDisplay.innerHTML = formatted.html;
+
+    // Apply font size with auto-scaling
+    const fontSize = calculateFontSize(wordObj.text.length);
+    elements.wordDisplay.style.fontSize = `calc(clamp(2rem, 8vw, 5rem) * ${fontSize / 100})`;
 
     // Animation
     elements.wordDisplay.classList.remove('animate');
@@ -411,6 +434,12 @@ function initEventListeners() {
 
     elements.highlightCenterCheck.addEventListener('change', () => {
         state.highlightCenter = elements.highlightCenterCheck.checked;
+        if (!state.isPlaying && state.words.length > 0) displayWord();
+    });
+
+    elements.fontSizeSlider.addEventListener('input', () => {
+        state.fontSize = parseInt(elements.fontSizeSlider.value);
+        elements.fontSizeValue.textContent = state.fontSize;
         if (!state.isPlaying && state.words.length > 0) displayWord();
     });
 
