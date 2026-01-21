@@ -132,8 +132,11 @@ function displayWord() {
     elements.wordDisplay.innerHTML = formatted.html;
 
     // Apply font size with auto-scaling
-    const fontSize = calculateFontSize(wordObj.text.length);
-    elements.wordDisplay.style.fontSize = `calc(clamp(2rem, 8vw, 5rem) * ${fontSize / 100})`;
+    const scaledFontSize = calculateFontSize(wordObj.text.length);
+    // Base: 8vw capped at 80px min 32px, then scale by user setting
+    const baseSize = Math.max(32, Math.min(window.innerWidth * 0.08, 80));
+    const finalSize = baseSize * (scaledFontSize / 100);
+    elements.wordDisplay.style.fontSize = `${finalSize}px`;
 
     // Animation
     elements.wordDisplay.classList.remove('animate');
