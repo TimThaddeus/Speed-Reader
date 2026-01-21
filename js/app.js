@@ -99,19 +99,26 @@ function showToast(message, duration = 2000) {
 }
 
 /**
- * Calculate max font size that makes word fit on screen
+ * Calculate font size with auto-scaling for long words
+ * Ensures words always fit on screen regardless of font size setting
  */
-function getMaxFontSizeForWord(wordLength) {
-    // Approximate: each char needs ~0.6em width, screen has ~90vw usable
-    const screenWidth = window.innerWidth * 0.9;
-    const charWidthAt100 = window.innerWidth < 600 ? 28 : 45; // px per char at 100%
-    const maxWidth = screenWidth;
-    const wordWidth = wordLength * charWidthAt100;
+function calculateFontSize(wordLength) {
+    const baseFontSize = state.fontSize; // User setting (25-200%)
 
-    if (wordWidth > maxWidth) {
-        return (maxWidth / wordWidth) * 100;
+    // Max chars that fit at 100% font size (on mobile ~12, desktop ~18)
+    const isMobile = window.innerWidth < 600;
+    const maxCharsAt100 = isMobile ? 12 : 18;
+
+    // Calculate max chars at current font size
+    const maxChars = maxCharsAt100 * (100 / baseFontSize);
+
+    // If word is longer than max, scale down proportionally
+    if (wordLength > maxChars) {
+        const scaleFactor = maxChars / wordLength;
+        return baseFontSize * scaleFactor;
     }
-    return 999; // No limit needed
+
+    return baseFontSize;
 }
 
 /**
@@ -124,13 +131,11 @@ function displayWord() {
     const formatted = formatWordWithOrp(wordObj.text, state.highlightCenter);
     elements.wordDisplay.innerHTML = formatted.html;
 
-    // Apply font size: user setting, but capped so word fits
-    const maxFontSize = getMaxFontSizeForWord(wordObj.text.length);
-    const effectiveFontSize = Math.min(state.fontSize, maxFontSize);
-
-    // Base size scales with screen, no hard cap
-    const baseSize = Math.max(32, window.innerWidth * 0.05); // 5vw, min 32px
-    const finalSize = baseSize * (effectiveFontSize / 100);
+    // Apply font size with auto-scaling
+    const scaledFontSize = calculateFontSize(wordObj.text.length);
+    // Base: 8vw capped at 80px min 32px, then scale by user setting
+    const baseSize = Math.max(32, Math.min(window.innerWidth * 0.08, 80));
+    const finalSize = baseSize * (scaledFontSize / 100);
     elements.wordDisplay.style.fontSize = `${finalSize}px`;
 
     // Animation
