@@ -41,10 +41,10 @@ export function parseText(text) {
 
 /**
  * Calculate ORP (Optimal Recognition Point) index
- * Based on research: ~30% into the word is optimal
+ * ~40% for better centering in RSVP display
  */
 export function getOrpIndex(wordLength) {
-    return Math.floor(wordLength * 0.3);
+    return Math.floor(wordLength * 0.4);
 }
 
 /**
