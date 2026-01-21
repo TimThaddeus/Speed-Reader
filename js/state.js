@@ -10,13 +10,13 @@ export const state = {
     timeoutId: null,
 
     // Settings
-    wpm: 300,
+    wpm: 500,
     chapterPause: 2,
     sentencePause: 0.3,
     highlightCenter: true,
-    longWordBonus: 10,
-    longWordThreshold: 8,
-    fontSize: 100,
+    longWordBonus: 40,
+    longWordThreshold: 5,
+    fontSize: 150,
 
     // UI state
     currentLang: 'de',
