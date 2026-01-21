@@ -35,6 +35,9 @@ function cacheElements() {
     elements.currentWpmDisplay = document.getElementById('current-wpm');
     elements.speedUp = document.getElementById('speed-up');
     elements.speedDown = document.getElementById('speed-down');
+    elements.fontUp = document.getElementById('font-up');
+    elements.fontDown = document.getElementById('font-down');
+    elements.currentFontSize = document.getElementById('current-font-size');
     elements.toast = document.getElementById('toast');
 
     // Sliders
@@ -172,6 +175,7 @@ function startReading() {
     displayWord();
     updateProgress();
     elements.playPauseBtn.textContent = '▶';
+    elements.currentFontSize.textContent = state.fontSize;
 }
 
 /**
@@ -218,6 +222,17 @@ function handleSpeedAdjust(delta) {
     elements.currentWpmDisplay.textContent = newWpm;
     elements.wpmSlider.value = newWpm;
     elements.wpmValue.textContent = newWpm;
+}
+
+/**
+ * Handle font size adjustment
+ */
+function handleFontSizeAdjust(delta) {
+    state.fontSize = Math.max(25, Math.min(200, state.fontSize + delta));
+    elements.currentFontSize.textContent = state.fontSize;
+    elements.fontSizeSlider.value = state.fontSize;
+    elements.fontSizeValue.textContent = state.fontSize;
+    if (state.words.length > 0) displayWord();
 }
 
 /**
@@ -462,6 +477,10 @@ function initEventListeners() {
     // Speed controls
     elements.speedUp.addEventListener('click', () => handleSpeedAdjust(25));
     elements.speedDown.addEventListener('click', () => handleSpeedAdjust(-25));
+
+    // Font size controls
+    elements.fontUp.addEventListener('click', () => handleFontSizeAdjust(10));
+    elements.fontDown.addEventListener('click', () => handleFontSizeAdjust(-10));
 
     // Progress bar click
     elements.progressBar.addEventListener('click', (e) => {

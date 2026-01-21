@@ -218,7 +218,7 @@ Du kannst ganze Bücher, Artikel oder beliebige Texte einfügen. Kapitel werden 
                             <span data-i18n="fontSize">Schriftgröße</span>
                             <span class="setting-value"><span id="font-size-value">100</span>%</span>
                         </div>
-                        <input type="range" id="font-size-slider" min="50" max="150" value="100" step="10">
+                        <input type="range" id="font-size-slider" min="25" max="200" value="100" step="5">
                     </div>
                 </div>
             </div>
@@ -266,6 +266,12 @@ Du kannst ganze Bücher, Artikel oder beliebige Texte einfügen. Kapitel werden 
             </div>
 
             <div class="word-counter" id="word-counter">0 / 0</div>
+
+            <div class="font-size-display">
+                <button class="speed-adjust" id="font-down">A−</button>
+                <span><span id="current-font-size">100</span>%</span>
+                <button class="speed-adjust" id="font-up">A+</button>
+            </div>
 
             <div class="speed-display">
                 <button class="speed-adjust" id="speed-down">−</button>
